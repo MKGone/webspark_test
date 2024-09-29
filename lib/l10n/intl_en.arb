@@ -1,0 +1,15 @@
+{
+  "home_screen_appbar": "Home Screen",
+  "home_screen_title": "Set valid API base URL in order to continue",
+  "start_counting": "Start counting process",
+  "error_url": "Invalid URL format",
+  "error_empty_field": "Empty field",
+  "process_screen": "Process screen",
+  "finish_label": "All calculations has finished, you can send your results to server",
+  "error_label": "Something went wrong",
+  "send results": "Send results to server",
+  "send results1": "Send results to server",
+  "result_list": "Result list screen",
+  "preview_screen": "Preview screen",
+  "hint_text": "Send results to server"
+}
