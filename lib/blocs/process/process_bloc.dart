@@ -21,9 +21,7 @@ class ProcessBloc extends Bloc<ProcessEvent, ProcessState> {
 
         if (response.statusCode == 200) {
           emit(ProcessSuccess(response.body));
-          print(response.body);
         } else {
-          print("Failed with Status Code: ${response.statusCode}");
           emit(
               ProcessFailure("Failed to post results: ${response.statusCode}"));
         }

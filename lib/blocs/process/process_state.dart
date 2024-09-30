@@ -15,7 +15,7 @@ class ProcessSuccess extends ProcessState {
 class ProcessResultsPosted extends ProcessState {}
 
 class ProcessResultsError extends ProcessState {
-  final String message; // Add a message for error details
+  final String message;
 
   ProcessResultsError(this.message);
 }

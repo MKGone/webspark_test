@@ -3,7 +3,10 @@ import 'package:webspark_test/utils/constants.dart';
 
 final ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: background,
-  textTheme: const TextTheme(titleLarge: TextStyle(fontSize: 24)),
+  textTheme: const TextTheme(
+    titleLarge: TextStyle(fontSize: 24),
+    bodyMedium: TextStyle(fontSize: 16),
+  ),
   appBarTheme: const AppBarTheme(
     color: blue,
     titleTextStyle: TextStyle(color: background, fontSize: 24),

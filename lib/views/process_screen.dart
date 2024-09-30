@@ -25,6 +25,7 @@ class ProcessScreenState extends State<ProcessScreen> {
   String? _errorMessage;
   List<Map<String, dynamic>> _results = [];
   late ProcessBloc _processBloc;
+  List<dynamic> lockedCells = [];
 
   @override
   void initState() {
@@ -39,6 +40,21 @@ class ProcessScreenState extends State<ProcessScreen> {
         _progress = i / 100;
         _statusMessage = "$i%";
       });
+    }
+    final Map<String, dynamic> responseData = jsonDecode(widget.jsonResponse);
+    if (responseData['error'] == false) {
+      for (var item in responseData['data']) {
+        List<String> field = List<String>.from(item['field']);
+
+        for (int rowIndex = 0; rowIndex < field.length; rowIndex++) {
+          String row = field[rowIndex];
+          for (int colIndex = 0; colIndex < row.length; colIndex++) {
+            if (row[colIndex] == 'X') {
+              lockedCells.add({'x': colIndex, 'y': rowIndex});
+            }
+          }
+        }
+      }
     }
 
     _results = processApiResponse(widget.jsonResponse);
@@ -69,7 +85,6 @@ class ProcessScreenState extends State<ProcessScreen> {
     }).toList();
 
     String resultsString = jsonEncode(formattedResults);
-    print("Formatted Results Body: $resultsString");
 
     setState(() {
       _isPosting = true;
@@ -77,18 +92,18 @@ class ProcessScreenState extends State<ProcessScreen> {
     });
 
     _processBloc.add(PostResults(resultsString));
-
-    // Listen for the completion of the post request
     _processBloc.stream.listen((state) {
       if (state is ProcessSuccess) {
         setState(() {
           _isPosting = false;
           _errorMessage = null;
         });
-        // Navigate to ResultScreen with the response body
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => ResultScreen(resultsString: resultsString),
+            builder: (context) => ResultScreen(
+              resultsString: resultsString,
+              lockedCells: lockedCells,
+            ),
           ),
         );
       } else if (state is ProcessFailure) {
